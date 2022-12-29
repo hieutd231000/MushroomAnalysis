@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import SelectBox from './components/SelectBox';
+import ListBox from './components/ListSelect';
+import ModalResult from './components/Modal';
 
 function App() {
   return (
@@ -23,55 +25,7 @@ function App() {
           <Typography gutterBottom variant="h6" component="div">
             Xin hãy lựa chọn những thông tin sau đây để kiểm tra
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <Box sx={{ flexGrow: 1 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <SelectBox label="Hình dạng nấm">
-                    <MenuItem value={0}>Dạng hình chuông</MenuItem>
-                    <MenuItem value={1}>Dạng dẹt</MenuItem>
-                    <MenuItem value={2}>Dạng hình nón</MenuItem>
-                  </SelectBox>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectBox label="Màu sắc mũ nấm">
-                    <MenuItem value={0}>Dạng</MenuItem>
-                    <MenuItem value={1}>Dạng dẹt</MenuItem>
-                    <MenuItem value={2}>Dạng hình nón</MenuItem>
-                  </SelectBox>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectBox label="Bề mặt mũ nấm"></SelectBox>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectBox label="Mùi hương"></SelectBox>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectBox label="Bề mặt mũ nấm"></SelectBox>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectBox label="Mùi hương"></SelectBox>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectBox label="Bề mặt mũ nấm"></SelectBox>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectBox label="Mùi hương"></SelectBox>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectBox label="Bề mặt mũ nấm"></SelectBox>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectBox label="Mùi hương"></SelectBox>
-                </Grid>
-              </Grid>
-            </Box>
-          </Typography>
-          <Typography className='mushroom-box--button'>
-            <Button variant="contained" color="success">
-              Kiểm tra
-            </Button>
-          </Typography>
+          <ListBox></ListBox>
         </CardContent>
       </Card>
     </div>

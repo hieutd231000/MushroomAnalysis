@@ -12,6 +12,8 @@ export default function SelectBox({ children, label }) {
         setMushroom(event.target.value);
     };
 
+    console.log(mushroom);
+
     return (
         <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
