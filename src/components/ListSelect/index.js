@@ -100,7 +100,7 @@ export default function ListBox() {
             try {
                 const result = await axios({
                     method: 'POST',
-                    baseURL: 'https://54.255.168.205:8000',
+                    baseURL: 'https://54.255.168.205',
                     url: '/mushroom/naive-bayes',
                     data: bodyParameters
                 });
@@ -122,7 +122,7 @@ export default function ListBox() {
             try {
                 const result = await axios({
                     method: 'POST',
-                    baseURL: 'http://54.255.168.205:8000',
+                    baseURL: 'https://54.255.168.205',
                     url: '/mushroom/decision-tree',
                     data: bodyParameters
                 });
