@@ -12,7 +12,13 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ModalResult from '../Modal';
 import { Button } from '@mui/material';
-import Hyphenated from 'react-hyphen';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 export default function ListBox() {
     const [capshape, setCapshape] = React.useState('');
@@ -25,6 +31,10 @@ export default function ListBox() {
     const [population, setPopulation] = React.useState('');
     const [habitat, setHabitat] = React.useState('');
     const [ringtype, setRingType] = React.useState('');
+    const [isError, setIsError] = React.useState(0);
+    const [isMushRomm, setIsMushRoom] = React.useState('');
+    const [isMushRommColor, setIsMushRoomColor] = React.useState('');
+    const [isMushRommPercent, setIsMushRommPercent] = React.useState('');
 
     const bodyParameters = {
         "cap-shape": capshape,
@@ -72,25 +82,63 @@ export default function ListBox() {
         if (selectedBtn === 1) {
             console.log("test");
             try {
-                const result = await axios
-                    .post(`54.255.168.205:8000/mushroom/naive-bayes`, { body: bodyParameters });
-                console.log(result);
+                const result = await axios({
+                    method: 'POST',
+                    baseURL: 'http://54.255.168.205:8000',
+                    url: '/mushroom/naive-bayes',
+                    data: bodyParameters
+                });
+                if (result.data['result'] === 'e') {
+                    setIsMushRoom('nấm ăn được');
+                    setIsMushRoomColor('green');
+                    setIsMushRommPercent(result.data['explanation']['e']);
+                } else if (result.data['result'] === 'p') {
+                    setIsMushRoom('nấm độc');
+                    setIsMushRoomColor('red');
+                    setIsMushRommPercent(result.data['explanation']['p']);
+                }
+                console.log(result.data);
             } catch (e) {
+                setIsError(1);
                 console.log(e);
             }
         } else if (selectedBtn === 2) {
-            // axios
-            //     .post('http://127.0.0.1:8000/api/todo/add', bodyParameters, config)
-            //     .then(res => {
-            //         setLoading(false)
-            //         navigate('/home')
-            //     })
-            //     .catch(err => {
-            //         setLoading(false)
-            //         console.log(err)
-            //     })
+            console.log("test1");
+            try {
+                const result = await axios({
+                    method: 'POST',
+                    baseURL: 'http://54.255.168.205:8000',
+                    url: '/mushroom/decision-tree',
+                    data: bodyParameters
+                });
+                if (result.data['result'] === 'e') {
+                    setIsMushRoom('nấm ăn được');
+                    setIsMushRoomColor('green');
+                    
+                } else if (result.data['result'] === 'p') {
+                    setIsMushRoom('nấm độc');
+                    setIsMushRoomColor('red');
+        
+                }
+                console.log(result.data);
+            } catch (e) {
+                setIsError(1);
+                console.log(e);
+            }
         }
     }
+
+    function createData(name, calories, fat, carbs, protein) {
+        return { name, calories, fat, carbs, protein };
+      }
+      
+    const rows = [
+        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+        createData('Eclair', 262, 16.0, 24, 6.0),
+        createData('Cupcake', 305, 3.7, 67, 4.3),
+        createData('Gingerbread', 356, 16.0, 49, 3.9),
+    ];
 
     return (
         <div>
@@ -105,7 +153,7 @@ export default function ListBox() {
                                         labelId="mushroom-shape1"
                                         id="mushroom-shape-select1"
                                         value={capshape}
-                                        label="Capshape"
+                                        label="Hình dạng mũ nấm"
                                         onChange={e => setCapshape(e.target.value)}
                                     >
                                         <MenuItem value={'b'}>Dạng hình chuông</MenuItem>
@@ -335,19 +383,55 @@ export default function ListBox() {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Kết quả:
-                    </Typography>
+                        Kết luận:
+                    </Typography> 
                     <Typography id="modal-modal-description" sx={{ mt: 1, mb: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        Loại nấm với thông tin nhập vào là <span style={{color: isMushRommColor}}>{isMushRomm}</span>
                     </Typography>
+                    
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         Giải thích:
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 1, mb: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography>
+                    
+                    {selectedBtn === 1 && 
+                        <Typography id="modal-modal-description" sx={{ mt: 1, mb: 2 }}>
+                        Sử dụng giải thuật Naive-Bayes, hệ thống tính ra có {isMushRommPercent}% loại nấm với thông số nhập vào là {isMushRomm}.
+                        </Typography>
+                    } 
+                    {selectedBtn === 2 &&
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>no</TableCell>
+                                    <TableCell align="right">node_id</TableCell>
+                                    <TableCell align="right">feature</TableCell>
+                                    <TableCell align="right">value</TableCell>
+                                    <TableCell align="right">inequality_sign</TableCell>
+                                    <TableCell align="right">threshold</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map((row) => (
+                                <TableRow
+                                    key={row.name}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                    {row.name}
+                                    </TableCell>
+                                    <TableCell align="right">{row.calories}</TableCell>
+                                    <TableCell align="right">{row.fat}</TableCell>
+                                    <TableCell align="right">{row.carbs}</TableCell>
+                                    <TableCell align="right">{row.protein}</TableCell>
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                    </TableContainer>
+                    } 
                     <Button variant="contained" onClick={handleClose}>Kiểm tra trường hợp khác</Button>
-                </Box>
+                </Box>  
             </Modal>
         </div>
     );
