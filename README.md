@@ -18,4 +18,4 @@
  .../MushroomAnalysis $ npm start 
 ```
 ### II. Deploy
-* https://mushroom-analysis-ah2dye9ga-hieutd231000.vercel.app/
+* https://mushroom-analysis.vercel.app/
