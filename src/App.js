@@ -12,8 +12,14 @@ import Box from '@mui/material/Box';
 import SelectBox from './components/SelectBox';
 import ListBox from './components/ListSelect';
 import ModalResult from './components/Modal';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 function App() {
+
+  const refreshPage = () => {
+    window.location.reload(false);
+  }
+
   return (
     <div className='mushroom-box'>
       <Card sx={{ maxWidth: 1045 }} >
@@ -24,6 +30,7 @@ function App() {
         <CardContent sx={{ marginTop: 1 }}>
           <Typography gutterBottom variant="h6" component="div">
             Xin hãy lựa chọn những thông tin sau đây để kiểm tra
+            <ReplayIcon className='mushroom-box--icon' onClick={refreshPage} />
           </Typography>
           <ListBox></ListBox>
         </CardContent>
