@@ -474,7 +474,7 @@ export default function ListBox() {
                         Kết luận:
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 1, mb: 2 }}>
-                        Loại nấm với thông tin nhập vào là <span style={{ color: isMushRommColor }}>{isMushRomm}</span>
+                        Cây nấm với thông tin nhập vào là <span style={{ color: isMushRommColor }}>{isMushRomm}</span>
                     </Typography>
 
                     <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -483,7 +483,7 @@ export default function ListBox() {
 
                     {selectedBtn === 1 &&
                         <Typography id="modal-modal-description" sx={{ mt: 1, mb: 2 }}>
-                            Sử dụng giải thuật Naive-Bayes, hệ thống tính ra có {isMushRommPercent}% loại nấm với thông số nhập vào là {isMushRomm}.
+                            Sử dụng giải thuật Naive-Bayes, hệ thống tính ra rằng cây nấm với thông số vừa nhập vào có xác suất {isMushRommPercent}% là {isMushRomm}.
                         </Typography>
                     }
                     {selectedBtn === 2 &&
